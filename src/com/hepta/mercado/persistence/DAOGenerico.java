@@ -27,8 +27,6 @@ public class DAOGenerico<T extends EntidadeBase> {
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			manager.getTransaction().rollback();
-		}finally {
-			manager.close();
 		}
 	}
 
@@ -40,22 +38,19 @@ public class DAOGenerico<T extends EntidadeBase> {
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			manager.getTransaction().rollback();
-		}finally {
-			manager.close();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<T> getAll(){
+	public List<T> getAll() {
 		List<T> t = new ArrayList<>();
 		try {
 			Query query = manager.createQuery("FROM Fabricante");
 			t = query.getResultList();
 		} catch (Exception e) {
 			manager.getTransaction().rollback();
-		} finally {
-			manager.close();
 		}
 		return t;
 	}
+
 }

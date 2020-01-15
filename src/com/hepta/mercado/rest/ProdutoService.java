@@ -88,12 +88,17 @@ public class ProdutoService {
 	 * @param produto: Produto atualizado
 	 * @return response 200 (OK) - Conseguiu atualiza
 	 */
-	@Path("/atualiza {id}")
+	@Path("/atualiza/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@PUT
 	public Response produtoUpdate(@PathParam("id") Integer id, Produto produto) {
-		return Response.status(Status.NOT_IMPLEMENTED).build();
+		try {
+			dao.salvar(produto);
+		} catch (Exception e) {
+			return Response.status(Status.BAD_REQUEST).entity("Erro ao atualizar fabricante").build();
+		}
+		return Response.status(Status.CREATED).entity("Conseguiu atualizar").build();
 	}
 
 	/**
@@ -102,11 +107,16 @@ public class ProdutoService {
 	 * @param id: id do produto
 	 * @return response 200 (OK) - Conseguiu remover
 	 */
-	@Path("/remove {id}")
+	@Path("/remove/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@DELETE
 	public Response produtoDelete(@PathParam("id") Integer id) {
-		return Response.status(Status.NOT_IMPLEMENTED).build();
+		try {
+			dao.delete(id);
+		} catch (Exception e) {
+			return Response.status(Status.BAD_REQUEST).entity("Erro ao remover produto").build();
+		}
+		return Response.status(Status.CREATED).entity("Conseguiu remover produto").build();
 	}
 
 }

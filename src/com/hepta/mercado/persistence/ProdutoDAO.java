@@ -5,13 +5,10 @@ import java.util.List;
 import com.hepta.mercado.entity.Produto;
 
 public class ProdutoDAO {
-	
-	FabricanteDAO fabricanteDAO = new FabricanteDAO();
 
 	DAOGenerico<Produto> dao = new DAOGenerico<Produto>();
 
 	public void salvar(Produto produto) {
-		fabricanteDAO.salvar(produto.getFabricante());
 		dao.saveOrUpdate(produto);
 	}
 

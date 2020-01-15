@@ -81,5 +81,5 @@ public class Produto implements EntidadeBase {
 	public void setEstoque(Integer estoque) {
 		this.estoque = estoque;
 	}
-
+	
 }
