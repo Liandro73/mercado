@@ -1,6 +1,4 @@
-package com.hepta.mercado.rest;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+package com.hepta.mercado.service;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -9,11 +7,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
-
-import org.junit.runner.RunWith;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.Test;
 
 @RunWith
 class MercadoServiceTest {

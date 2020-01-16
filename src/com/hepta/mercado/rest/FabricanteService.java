@@ -3,6 +3,7 @@ package com.hepta.mercado.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -31,9 +32,10 @@ public class FabricanteService {
 
 	@Context
 	private HttpServletResponse response;
-
-	private FabricanteDAO dao;
 	
+	@Inject
+	private FabricanteDAO dao;
+
 	public FabricanteService() {
 		dao = new FabricanteDAO();
 	}
@@ -48,18 +50,18 @@ public class FabricanteService {
 	 * @param produto: Novo produto
 	 * @return response 200 (OK) - Conseguiu adicionar
 	 */
-	@Path("/inserir")
+	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@POST
 	public Response fabricanteCreate(Fabricante fabricante) {
 		try {
-			dao.salvar(fabricante);
+			dao.save(fabricante);
 		} catch (Exception e) {
-			return Response.status(Status.BAD_REQUEST).entity("Erro ao inserir fabricante").build();
+			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ADICIONAR FABRICANTE").build();
 		}
 		
-		return Response.status(Status.CREATED).entity("Conseguiu adicionar").build();
+		return Response.status(Status.CREATED).entity("CONSEGUIU ADICIONAR O FABRICANTE").build();
 	}
 	
 	/**
@@ -67,7 +69,7 @@ public class FabricanteService {
 	 * 
 	 * @return response 200 (OK) - Conseguiu listar
 	 */
-	@Path("/listar")
+	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
 	public Response fabricanteRead() {
@@ -75,7 +77,7 @@ public class FabricanteService {
 		try {
 			fabricantes = dao.getAll();
 		} catch(Exception e) {
-			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao buscar fabricantes").build();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("ERRO AO BUSCAR FABRICANTE").build();
 		}
 		
 		GenericEntity<List<Fabricante>> entity = new GenericEntity<List<Fabricante>>(fabricantes) {};
@@ -89,12 +91,18 @@ public class FabricanteService {
 	 * @param produto: Fabricante atualizado
 	 * @return response 200 (OK) - Conseguiu atualiza
 	 */
-	@Path("/atualiza {id}")
+	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@PUT
-	public Response fabricanteUpdate(@PathParam("id") Integer id, Fabricante fabricante) {
-		return Response.status(Status.NOT_IMPLEMENTED).build();
+	public Response fabricanteUpdate(Fabricante fabricante) {
+		try {
+			dao.update(fabricante);
+		} catch (Exception e) {
+			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ATUALIZAR FABRICANTE").build();
+		}
+		
+		return Response.status(Status.CREATED).entity("CONSEGUIU ATUALIZAR O FABRICANTE").build();
 	}
 	
 	/**
@@ -103,11 +111,17 @@ public class FabricanteService {
 	 * @param id: id do fabricante
 	 * @return response 200 (OK) - Conseguiu remover
 	 */
-	@Path("/remove {id}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@DELETE
 	public Response fabricanteDelete(@PathParam("id") Integer id) {
-		return Response.status(Status.NOT_IMPLEMENTED).build();
+		try {
+			dao.delete(id);
+		} catch (Exception e) {
+			return Response.status(Status.BAD_REQUEST).entity("ERRO AO REMOVER FABRICANTE").build();
+		}
+		
+		return Response.status(Status.CREATED).entity("CONSEGUIU REMOVER O FABRICANTE").build();
 	}
 
 }

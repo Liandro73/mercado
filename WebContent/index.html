@@ -33,8 +33,16 @@
 			  <td>{{ produto.volume }}</td> 
 			  <td>{{ produto.unidade }}</td> 
 			  <td>{{ produto.estoque }}</td>
-			  <td><span @click="">&#9998;</span>
-				<span  @click="">&#10006;</span>
+			  <td>
+			  
+			  <button onclick="window.location.href = '/';">
+			  <span @click="">EDITAR &#9998;</span>
+			  </button>
+			  
+			  <button onclick="window.location.href = '/';">
+			  <span @click="">EXCLUIR &#10006;</span>
+			  </button>
+
 			  </td>
 			</tr>
 		  </tbody>
