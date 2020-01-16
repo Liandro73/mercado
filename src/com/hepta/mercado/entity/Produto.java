@@ -1,6 +1,7 @@
 package com.hepta.mercado.entity;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Produto implements EntidadeBase {
+public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -21,7 +22,7 @@ public class Produto implements EntidadeBase {
 	@Column(name = "NOME", nullable = false)
 	private String nome;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "ID_FABRICANTE", nullable = false)
 	private Fabricante fabricante;
 

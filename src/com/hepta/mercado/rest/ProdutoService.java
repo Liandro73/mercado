@@ -3,6 +3,7 @@ package com.hepta.mercado.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -30,7 +31,8 @@ public class ProdutoService {
 
 	@Context
 	private HttpServletResponse response;
-
+	
+	@Inject
 	private ProdutoDAO dao;
 
 	public ProdutoService() {
@@ -47,17 +49,18 @@ public class ProdutoService {
 	 * @param produto: Novo produto
 	 * @return response 200 (OK) - Conseguiu adicionar
 	 */
-	@Path("/inserir")
+	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@POST
 	public Response produtoCreate(Produto produto) {
 		try {
-			dao.salvar(produto);
+			dao.save(produto);
 		} catch (Exception e) {
-			return Response.status(Status.BAD_REQUEST).entity("Erro ao inserir produto").build();
+			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ADICIONAR PRODUTO").build();
 		}
-		return Response.status(Status.CREATED).entity("Conseguiu adicionar").build();
+		
+		return Response.status(Status.CREATED).entity("CONSEGUIU ADICIONAR O PRODUTO").build();
 	}
 
 	/**
@@ -65,7 +68,7 @@ public class ProdutoService {
 	 * 
 	 * @return response 200 (OK) - Conseguiu listar
 	 */
-	@Path("/listar")
+	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
 	public Response produtoRead() {
@@ -73,11 +76,10 @@ public class ProdutoService {
 		try {
 			produtos = dao.getAll();
 		} catch (Exception e) {
-			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao buscar produtos").build();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("ERRO AO BUSCAR PRODUTO").build();
 		}
 
-		GenericEntity<List<Produto>> entity = new GenericEntity<List<Produto>>(produtos) {
-		};
+		GenericEntity<List<Produto>> entity = new GenericEntity<List<Produto>>(produtos) {};
 		return Response.status(Status.OK).entity(entity).build();
 	}
 
@@ -88,17 +90,18 @@ public class ProdutoService {
 	 * @param produto: Produto atualizado
 	 * @return response 200 (OK) - Conseguiu atualiza
 	 */
-	@Path("/atualiza/{id}")
+	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@PUT
 	public Response produtoUpdate(@PathParam("id") Integer id, Produto produto) {
 		try {
-			dao.salvar(produto);
+			dao.update(produto);
 		} catch (Exception e) {
-			return Response.status(Status.BAD_REQUEST).entity("Erro ao atualizar fabricante").build();
+			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ATUALIZAR PRODUTO").build();
 		}
-		return Response.status(Status.CREATED).entity("Conseguiu atualizar").build();
+		
+		return Response.status(Status.CREATED).entity("CONSEGUIU ATUALIZAR O PRODUTO").build();
 	}
 
 	/**
@@ -107,16 +110,17 @@ public class ProdutoService {
 	 * @param id: id do produto
 	 * @return response 200 (OK) - Conseguiu remover
 	 */
-	@Path("/remove/{id}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@DELETE
 	public Response produtoDelete(@PathParam("id") Integer id) {
 		try {
 			dao.delete(id);
 		} catch (Exception e) {
-			return Response.status(Status.BAD_REQUEST).entity("Erro ao remover produto").build();
+			return Response.status(Status.BAD_REQUEST).entity("ERRO AO REMOVER PRODUTO").build();
 		}
-		return Response.status(Status.CREATED).entity("Conseguiu remover produto").build();
+		
+		return Response.status(Status.CREATED).entity("CONSEGUIU REMOVER O PRODUTO").build();
 	}
 
 }
