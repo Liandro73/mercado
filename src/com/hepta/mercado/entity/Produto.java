@@ -82,5 +82,5 @@ public class Produto implements Serializable {
 	public void setEstoque(Integer estoque) {
 		this.estoque = estoque;
 	}
-	
+
 }

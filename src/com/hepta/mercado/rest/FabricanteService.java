@@ -3,7 +3,6 @@ package com.hepta.mercado.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -12,7 +11,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
@@ -23,27 +21,25 @@ import javax.ws.rs.core.Response.Status;
 import com.hepta.mercado.entity.Fabricante;
 import com.hepta.mercado.persistence.FabricanteDAO;
 
-
 @Path("/fabricantes")
 public class FabricanteService {
-	
+
 	@Context
 	private HttpServletRequest request;
 
 	@Context
 	private HttpServletResponse response;
-	
-	@Inject
+
 	private FabricanteDAO dao;
 
 	public FabricanteService() {
 		dao = new FabricanteDAO();
 	}
-	
+
 	protected void setRequest(HttpServletRequest request) {
 		this.request = request;
 	}
-	
+
 	/**
 	 * Adiciona novo fabricante no mercado
 	 * 
@@ -60,10 +56,10 @@ public class FabricanteService {
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ADICIONAR FABRICANTE").build();
 		}
-		
-		return Response.status(Status.CREATED).entity("CONSEGUIU ADICIONAR O FABRICANTE").build();
+
+		return Response.status(Status.CREATED.getStatusCode()).entity("CONSEGUIU ADICIONAR O FABRICANTE").build();
 	}
-	
+
 	/**
 	 * Lista todos os fabricantes cadastrados
 	 * 
@@ -76,18 +72,19 @@ public class FabricanteService {
 		List<Fabricante> fabricantes = new ArrayList<>();
 		try {
 			fabricantes = dao.getAll();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("ERRO AO BUSCAR FABRICANTE").build();
 		}
-		
-		GenericEntity<List<Fabricante>> entity = new GenericEntity<List<Fabricante>>(fabricantes) {};
+
+		GenericEntity<List<Fabricante>> entity = new GenericEntity<List<Fabricante>>(fabricantes) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	/**
 	 * Atualiza um fabricante no mercado
 	 * 
-	 * @param id: id do fabricante
+	 * @param id:      id do fabricante
 	 * @param produto: Fabricante atualizado
 	 * @return response 200 (OK) - Conseguiu atualiza
 	 */
@@ -101,27 +98,27 @@ public class FabricanteService {
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ATUALIZAR FABRICANTE").build();
 		}
-		
-		return Response.status(Status.CREATED).entity("CONSEGUIU ATUALIZAR O FABRICANTE").build();
+
+		return Response.status(Status.OK).entity("CONSEGUIU ATUALIZAR O FABRICANTE").build();
 	}
-	
+
 	/**
 	 * Remove um fabricante do mercado
 	 * 
 	 * @param id: id do fabricante
 	 * @return response 200 (OK) - Conseguiu remover
 	 */
-	@Path("/{id}")
+	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@DELETE
-	public Response fabricanteDelete(@PathParam("id") Integer id) {
+	public Response fabricanteDelete(Integer id) {
 		try {
 			dao.delete(id);
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO REMOVER FABRICANTE").build();
 		}
-		
-		return Response.status(Status.CREATED).entity("CONSEGUIU REMOVER O FABRICANTE").build();
+
+		return Response.status(Status.OK).entity("CONSEGUIU REMOVER O FABRICANTE").build();
 	}
 
 }

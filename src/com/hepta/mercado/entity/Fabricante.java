@@ -16,7 +16,7 @@ public class Fabricante implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_FABRICANTE")
 	private Integer id;
-	
+
 	@Column(name = "NOME")
 	private String nome;
 
