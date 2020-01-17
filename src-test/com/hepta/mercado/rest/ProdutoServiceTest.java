@@ -1,4 +1,4 @@
-package com.hepta.mercado.service;
+package com.hepta.mercado.rest;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -7,20 +7,24 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-@RunWith
-class MercadoServiceTest {
+import junit.framework.TestCase;
 
+class ProdutoServiceTest extends TestCase {
+	
 	private static WebTarget service;
 	private static final String URL_LOCAL = "http://localhost:8080/mercado/rs/produtos";
 	
 	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception {
+		@SuppressWarnings("unused")
 		ClientConfig config = new ClientConfig();
-		Client client = ClientBuilder.newClient(config);
-		service = client.target( UriBuilder.fromUri(URL_LOCAL).build() );
+		Client client = ClientBuilder.newClient();
+		service = client.target(UriBuilder.fromUri(URL_LOCAL).build());
 	}
-
+	
 	@Test
 	void testListaTodosProdutos() {
 		// QUANDO

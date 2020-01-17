@@ -3,7 +3,6 @@ package com.hepta.mercado.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -31,8 +30,7 @@ public class ProdutoService {
 
 	@Context
 	private HttpServletResponse response;
-	
-	@Inject
+
 	private ProdutoDAO dao;
 
 	public ProdutoService() {
@@ -59,7 +57,7 @@ public class ProdutoService {
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ADICIONAR PRODUTO").build();
 		}
-		
+
 		return Response.status(Status.CREATED).entity("CONSEGUIU ADICIONAR O PRODUTO").build();
 	}
 
@@ -79,7 +77,8 @@ public class ProdutoService {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("ERRO AO BUSCAR PRODUTO").build();
 		}
 
-		GenericEntity<List<Produto>> entity = new GenericEntity<List<Produto>>(produtos) {};
+		GenericEntity<List<Produto>> entity = new GenericEntity<List<Produto>>(produtos) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
 
@@ -100,7 +99,7 @@ public class ProdutoService {
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ATUALIZAR PRODUTO").build();
 		}
-		
+
 		return Response.status(Status.CREATED).entity("CONSEGUIU ATUALIZAR O PRODUTO").build();
 	}
 
@@ -119,7 +118,7 @@ public class ProdutoService {
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO REMOVER PRODUTO").build();
 		}
-		
+
 		return Response.status(Status.CREATED).entity("CONSEGUIU REMOVER O PRODUTO").build();
 	}
 

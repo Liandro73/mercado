@@ -3,7 +3,6 @@ package com.hepta.mercado.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -12,7 +11,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
@@ -23,7 +21,6 @@ import javax.ws.rs.core.Response.Status;
 import com.hepta.mercado.entity.Fabricante;
 import com.hepta.mercado.persistence.FabricanteDAO;
 
-
 @Path("/fabricantes")
 public class FabricanteService {
 	
@@ -32,8 +29,7 @@ public class FabricanteService {
 
 	@Context
 	private HttpServletResponse response;
-	
-	@Inject
+
 	private FabricanteDAO dao;
 
 	public FabricanteService() {
@@ -111,17 +107,17 @@ public class FabricanteService {
 	 * @param id: id do fabricante
 	 * @return response 200 (OK) - Conseguiu remover
 	 */
-	@Path("/{id}")
+	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@DELETE
-	public Response fabricanteDelete(@PathParam("id") Integer id) {
+	public Response fabricanteDelete(Integer id) {
 		try {
 			dao.delete(id);
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO REMOVER FABRICANTE").build();
 		}
 		
-		return Response.status(Status.CREATED).entity("CONSEGUIU REMOVER O FABRICANTE").build();
+		return Response.status(Status.OK).entity("CONSEGUIU REMOVER O FABRICANTE").build();
 	}
 
 }
