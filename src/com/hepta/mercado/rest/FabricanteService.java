@@ -23,7 +23,7 @@ import com.hepta.mercado.persistence.FabricanteDAO;
 
 @Path("/fabricantes")
 public class FabricanteService {
-	
+
 	@Context
 	private HttpServletRequest request;
 
@@ -35,11 +35,11 @@ public class FabricanteService {
 	public FabricanteService() {
 		dao = new FabricanteDAO();
 	}
-	
+
 	protected void setRequest(HttpServletRequest request) {
 		this.request = request;
 	}
-	
+
 	/**
 	 * Adiciona novo fabricante no mercado
 	 * 
@@ -56,10 +56,10 @@ public class FabricanteService {
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ADICIONAR FABRICANTE").build();
 		}
-		
-		return Response.status(Status.CREATED).entity("CONSEGUIU ADICIONAR O FABRICANTE").build();
+
+		return Response.status(Status.CREATED.getStatusCode()).entity("CONSEGUIU ADICIONAR O FABRICANTE").build();
 	}
-	
+
 	/**
 	 * Lista todos os fabricantes cadastrados
 	 * 
@@ -72,18 +72,19 @@ public class FabricanteService {
 		List<Fabricante> fabricantes = new ArrayList<>();
 		try {
 			fabricantes = dao.getAll();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("ERRO AO BUSCAR FABRICANTE").build();
 		}
-		
-		GenericEntity<List<Fabricante>> entity = new GenericEntity<List<Fabricante>>(fabricantes) {};
+
+		GenericEntity<List<Fabricante>> entity = new GenericEntity<List<Fabricante>>(fabricantes) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	/**
 	 * Atualiza um fabricante no mercado
 	 * 
-	 * @param id: id do fabricante
+	 * @param id:      id do fabricante
 	 * @param produto: Fabricante atualizado
 	 * @return response 200 (OK) - Conseguiu atualiza
 	 */
@@ -97,10 +98,10 @@ public class FabricanteService {
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ATUALIZAR FABRICANTE").build();
 		}
-		
-		return Response.status(Status.CREATED).entity("CONSEGUIU ATUALIZAR O FABRICANTE").build();
+
+		return Response.status(Status.OK).entity("CONSEGUIU ATUALIZAR O FABRICANTE").build();
 	}
-	
+
 	/**
 	 * Remove um fabricante do mercado
 	 * 
@@ -116,7 +117,7 @@ public class FabricanteService {
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO REMOVER FABRICANTE").build();
 		}
-		
+
 		return Response.status(Status.OK).entity("CONSEGUIU REMOVER O FABRICANTE").build();
 	}
 

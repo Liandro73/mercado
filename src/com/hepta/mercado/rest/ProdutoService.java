@@ -11,7 +11,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
@@ -89,18 +88,18 @@ public class ProdutoService {
 	 * @param produto: Produto atualizado
 	 * @return response 200 (OK) - Conseguiu atualiza
 	 */
-	@Path("/{id}")
+	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@PUT
-	public Response produtoUpdate(@PathParam("id") Integer id, Produto produto) {
+	public Response produtoUpdate(Produto produto) {
 		try {
 			dao.update(produto);
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO ATUALIZAR PRODUTO").build();
 		}
 
-		return Response.status(Status.CREATED).entity("CONSEGUIU ATUALIZAR O PRODUTO").build();
+		return Response.status(Status.OK).entity("CONSEGUIU ATUALIZAR O PRODUTO").build();
 	}
 
 	/**
@@ -109,17 +108,17 @@ public class ProdutoService {
 	 * @param id: id do produto
 	 * @return response 200 (OK) - Conseguiu remover
 	 */
-	@Path("/{id}")
+	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@DELETE
-	public Response produtoDelete(@PathParam("id") Integer id) {
+	public Response produtoDelete(Integer id) {
 		try {
 			dao.delete(id);
 		} catch (Exception e) {
 			return Response.status(Status.BAD_REQUEST).entity("ERRO AO REMOVER PRODUTO").build();
 		}
 
-		return Response.status(Status.CREATED).entity("CONSEGUIU REMOVER O PRODUTO").build();
+		return Response.status(Status.OK).entity("CONSEGUIU REMOVER O PRODUTO").build();
 	}
 
 }
